@@ -1,6 +1,6 @@
 {
     "name": "overlord",
-    "version": "0.1.0",
+    "version": "0.1.0-alpha",
     "description": "A CMS built with Vue, Quasar and Firebase",
     "private": false,
     "license": "ISC",

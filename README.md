@@ -1,7 +1,7 @@
 # Overlord
 A CMS built with Vue, Quasar and Firebase.
 
-![GitHub](https://img.shields.io/github/license/erellsworth/overlord)
+![GitHub](https://img.shields.io/github/license/erellsworth/overlord) ![GitHub package.json version](https://img.shields.io/github/package-json/v/erellsworth/overlord)
 
 ## Project setup
 ```
