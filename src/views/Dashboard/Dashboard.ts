@@ -1,7 +1,6 @@
 
 import { Component, Vue } from 'vue-property-decorator';
 import './Dashboard.module.scss';
-import Login from '../../components/Login/Login.vue';
 
 import {
     Quasar,
@@ -20,7 +19,6 @@ Vue.use(Quasar);
 @Component({
     name: "DashboardLayout",
     components: {
-        Login,
         QLayout,
         QPageContainer,
         QPage,
