@@ -1,4 +1,7 @@
-# blogger
+# Overlord
+A CMS built with Vue, Quasar and Firebase.
+
+![GitHub](https://img.shields.io/github/license/erellsworth/overlord)
 
 ## Project setup
 ```
