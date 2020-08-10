@@ -12,11 +12,11 @@ const template = `
         <p>${componentName}</p>
     </template>
     <script lang="ts" src="./${componentName}.ts"></script>
+    <style lang="scss" src="./${componentName}.module.scss"></style>
 `;
 
 const script = `
 import { Component, Vue } from 'vue-property-decorator';
-import './${componentName}.module.scss';
 
 @Component
 export default class ${componentName} extends Vue {

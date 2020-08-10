@@ -1,12 +1,19 @@
 
 import { Component, Vue } from "vue-property-decorator";
-import "./Login.module.scss";
 import firebase from '../../../services/firebase.service';
-import { QBtn } from 'quasar';
+import {
+    QCard,
+    QCardSection,
+    QCardActions,
+    QBtn
+} from 'quasar';
 
 @Component(
     {
         components: {
+            QCard,
+            QCardSection,
+            QCardActions,
             QBtn
         },
         methods: {
