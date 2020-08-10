@@ -6,14 +6,14 @@ type User = firebase.User | null;
 class FirebaseService extends Service {
 
     private credentials = {
-        apiKey: "AIzaSyDS1JkRgXw-ULvr4SoZrKJAxzaQUOsRTgE",
-        authDomain: "er-ellsworth.firebaseapp.com",
-        databaseURL: "https://er-ellsworth.firebaseio.com",
-        projectId: "er-ellsworth",
-        storageBucket: "er-ellsworth.appspot.com",
-        messagingSenderId: "1030516368098",
-        appId: "1:1030516368098:web:6f251ef6e9dc536189b4bb",
-        measurementId: "G-WL5QNG0D8B"
+        apiKey: process.env.VUE_APP_FIREBASE_API_KEY,
+        authDomain: process.env.VUE_APP_FIREBASE_AUTH_DOMAIN,
+        databaseURL: process.env.VUE_APP_FIREBASE_API_DATABASE_URL,
+        projectId: process.env.VUE_APP_FIREBASE_PROJECT_ID,
+        storageBucket: process.env.VUE_APP_FIREBASE_STORAGE_BUCKET,
+        messagingSenderId: process.env.VUE_APP_FIREBASE_SENDER_ID,
+        appId: process.env.VUE_APP_FIREBASE_APP_ID,
+        measurementId: process.env.VUE_APP_FIREBASE_MEASUREMENT_ID
     };
 
     private firebase: firebase.app.App;
@@ -26,8 +26,12 @@ class FirebaseService extends Service {
         this.provider = new auth.GoogleAuthProvider();
         this.firebase.auth().onAuthStateChanged((user: User) => {
             this.user = user;
-            if (this.user && this.currentPathMatches('/login')) {
+            if (user && this.currentPathMatches('/login')) {
                 this.navigate('/');
+            }
+
+            if (!user && !this.currentPathMatches('/login')) {
+                this.navigate('/login');
             }
         });
     }
@@ -35,10 +39,15 @@ class FirebaseService extends Service {
     /**
      * login
      */
-    public async login() {
-        const credentials = await this.firebase.auth().signInWithPopup(this.provider);
-        this.user = credentials.user;
-        this.navigate('/');
+    public login() {
+        this.firebase.auth().signInWithPopup(this.provider);
+    }
+
+    /**
+     * logout
+     */
+    public logout() {
+        this.firebase.auth().signOut();
     }
 
     public isAnOverlord(): boolean {
