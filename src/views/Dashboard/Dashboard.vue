@@ -6,6 +6,15 @@
         <q-btn dense flat round icon="fas fa-bars" @click="menuOpen = !menuOpen" />
 
         <q-toolbar-title>Dashboard</q-toolbar-title>
+        <q-btn flat round dense icon="fas fa-user">
+          <q-menu>
+            <q-list style="min-width: 100px">
+              <q-item clickable v-close-popup>
+                <q-item-section @click="logout">Sign Out</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
       </q-toolbar>
 
       <q-tabs align="left">
