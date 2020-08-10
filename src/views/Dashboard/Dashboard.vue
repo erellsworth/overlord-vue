@@ -1,7 +1,7 @@
 
 <template>
   <q-layout view="hHh LpR fFf">
-    <q-header reveal elevated class="bg-primary text-white" height-hint="98">
+    <q-header reveal elevated class="bg-primary text-white" height-hint="98" v-show="isAnOverlord">
       <q-toolbar>
         <q-btn dense flat round icon="fas fa-bars" @click="menuOpen = !menuOpen" />
 
@@ -24,7 +24,7 @@
       </q-tabs>
     </q-header>
 
-    <q-drawer v-model="menuOpen" side="left" overlay elevated>
+    <q-drawer v-model="menuOpen" side="left" overlay elevated v-show="isAnOverlord">
       <!-- drawer content -->
     </q-drawer>
 
@@ -34,3 +34,4 @@
   </q-layout>
 </template>
 <script lang="ts" src="./Dashboard.ts"></script>
+<style lang="scss" src="./Dashboard.module.scss"></style>

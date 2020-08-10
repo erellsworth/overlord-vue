@@ -1,7 +1,7 @@
 import { auth, initializeApp } from "firebase";
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Service } from '.';
-
-type User = firebase.User | null;
+import { User } from '../interfaces/user.interface';
 
 class FirebaseService extends Service {
 
@@ -18,14 +18,18 @@ class FirebaseService extends Service {
 
     private firebase: firebase.app.App;
     private provider: firebase.auth.GoogleAuthProvider;
-    private user: User = null;
+    private _user: User = null;
+    private observer: BehaviorSubject<User>;
 
     constructor() {
         super();
         this.firebase = initializeApp(this.credentials);
         this.provider = new auth.GoogleAuthProvider();
+        this.observer = new BehaviorSubject(this._user);
+
         this.firebase.auth().onAuthStateChanged((user: User) => {
-            this.user = user;
+            this._user = user;
+            this.observer.next(user);
             if (user && this.currentPathMatches('/login')) {
                 this.navigate('/');
             }
@@ -34,6 +38,17 @@ class FirebaseService extends Service {
                 this.navigate('/login');
             }
         });
+    }
+
+    /**
+    *
+    * observable for watching user data
+    *
+    * @returns { Observable } IUser
+    *
+    */
+    public get user(): Observable<User> {
+        return this.observer.asObservable();
     }
 
     /**
@@ -51,7 +66,7 @@ class FirebaseService extends Service {
     }
 
     public isAnOverlord(): boolean {
-        return this.user !== null;
+        return this._user !== null;
     }
 }
 

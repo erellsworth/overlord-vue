@@ -1,6 +1,5 @@
 
 import { Component, Vue } from 'vue-property-decorator';
-import './Dashboard.module.scss';
 import firebase from '../../services/firebase.service';
 
 import {
@@ -18,6 +17,15 @@ import {
 } from 'quasar';
 
 Vue.use(Quasar);
+
+const data = {
+    menuOpen: false,
+    isAnOverlord: false
+}
+
+firebase.user.subscribe(() => {
+    data.isAnOverlord = firebase.isAnOverlord();
+});
 
 @Component({
     name: "DashboardLayout",
@@ -43,8 +51,6 @@ Vue.use(Quasar);
 })
 export default class Dashboard extends Vue {
     data() {
-        return {
-            menuOpen: false
-        }
+        return data;
     }
 }
