@@ -2,8 +2,9 @@ import Vue from 'vue';
 import VueRouter, { RouteConfig } from 'vue-router';
 import Home from '../views/Dashboard/Home/Home.vue';
 import Login from '../views/Dashboard/Login/Login.vue';
+import firebase from '../services/firebase.service';
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
     {
@@ -33,7 +34,7 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const isAuthenticated = false;
+    const isAuthenticated = firebase.isAnOverlord();
 
     if (to.name !== 'Login' && !isAuthenticated) {
         next({ name: 'Login' });

@@ -1,6 +1,10 @@
-import firebase from "firebase";
+import { auth, initializeApp } from "firebase";
+import { Service } from '.';
 
-export class FirebaseService {
+type User = firebase.User | null;
+
+class FirebaseService extends Service {
+
     private credentials = {
         apiKey: "AIzaSyDS1JkRgXw-ULvr4SoZrKJAxzaQUOsRTgE",
         authDomain: "er-ellsworth.firebaseapp.com",
@@ -14,19 +18,32 @@ export class FirebaseService {
 
     private firebase: firebase.app.App;
     private provider: firebase.auth.GoogleAuthProvider;
+    private user: User = null;
 
     constructor() {
-        this.firebase = firebase.initializeApp(this.credentials);
-        this.provider = new firebase.auth.GoogleAuthProvider();
+        super();
+        this.firebase = initializeApp(this.credentials);
+        this.provider = new auth.GoogleAuthProvider();
+        this.firebase.auth().onAuthStateChanged((user: User) => {
+            this.user = user;
+            if (this.user && this.currentPathMatches('/login')) {
+                this.navigate('/');
+            }
+        });
     }
 
     /**
      * login
      */
     public async login() {
-
         const credentials = await this.firebase.auth().signInWithPopup(this.provider);
+        this.user = credentials.user;
+        this.navigate('/');
+    }
 
-        console.log('credentials', credentials);
+    public isAnOverlord(): boolean {
+        return this.user !== null;
     }
 }
+
+export default new FirebaseService();
